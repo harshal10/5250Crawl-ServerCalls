@@ -46,7 +46,7 @@
 
                 <Label
                     FontSize="Small"
-                    Text="Mike Koenig"
+                    Text="Harshal Vadnere"
                     VerticalOptions="Center"
                     HorizontalOptions="CenterAndExpand" />
 

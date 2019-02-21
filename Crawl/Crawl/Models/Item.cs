@@ -60,11 +60,18 @@ namespace Crawl.Models
         // Helper to combine the attributes into a single line, to make it easier to display the item as a string
         public string FormatOutput()
         {
-            var myReturn = Name;
 
-            // Implement, change implementation to show all the fields well formatted
+            var myReturn = "Name : " + Name + "\n" +
+                            "Description : " + Description + "\n" +
+                            "Image URI : " + ImageURI + "\n" +
+                            "Location : " +Location.ToString() + "\n" +
+                            "Attribute : " + Attribute.ToString() + "\n" +
+                            "Value : " + Value + "\n" +
+                            "Damage : " + Damage + "\n" +
+                            "Range : " + Range;
 
             return myReturn.Trim();
+
         }
 
         public Item(Item data)

@@ -168,8 +168,8 @@ namespace Crawl.Views
                 // The ServerItemValue Code stands for the batch of items to get
                 // as the group to request.  1, 2, 3, 100 (All), or if not specified All
 
-                // 1. Take the value from ServerItemValue.Text, Convert to an ToInt32 and save it in a variable
-                // 2. set myDataList = await ItemsController.Instance.GetItemsFromServer passing the variable
+                var value = Convert.ToInt32(ServerItemValue.Text);
+                myDataList = await ItemsController.Instance.GetItemsFromServer(value);
 
                 if (myDataList != null && myDataList.Count > 0)
                 {
@@ -180,7 +180,7 @@ namespace Crawl.Views
                     {
                         // Add them line by one, use \n to force new line for output display.
                         // Build up the output string by adding formatted Item Output
-                        myOutput += "//implement call item formatter" + "\n";
+                        myOutput += item.FormatOutput() + "\n";
                     }
                 }
 

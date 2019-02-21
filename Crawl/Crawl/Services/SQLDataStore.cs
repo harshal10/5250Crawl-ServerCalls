@@ -103,65 +103,156 @@ namespace Crawl.Services
             //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "Fifth Score", ScoreTotal = 555 });
             //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "Sixth Score", ScoreTotal = 666 });
         }
-
-        #region Item
-        // Item
-
-        // Add InsertUpdateAsync_Item Method
-
-        // Check to see if the item exists
-        // Add your code here.
-
-        // If it does not exist, then Insert it into the DB
-        // Add your code here.
-        // return true;
-
-        // If it does exist, Update it into the DB
-        // Add your code here
-        // return true;
-
-        // If you got to here then return false;
-
+        #region ItemNew
         public async Task<bool> InsertUpdateAsync_Item(Item data)
         {
-            // Implement
+
+            // Check to see if the item exist
+
+            var oldData = await GetAsync_Item(data.Id);
+
+            if (oldData == null)
+
+            {
+
+                await AddAsync_Item(data);
+
+                return true;
+
+            }
+
+
+
+            // Compare it, if different update in the DB
+
+            var UpdateResult = await UpdateAsync_Item(data);
+
+            if (UpdateResult)
+
+            {
+
+                await AddAsync_Item(data);
+
+                return true;
+
+            }
+
+
 
             return false;
         }
 
         public async Task<bool> AddAsync_Item(Item data)
         {
-            // Implement
+            var result = await App.Database.InsertAsync(data);
+            if (result == 1)
+            {
+                return true;
+            }
 
             return false;
         }
 
         public async Task<bool> UpdateAsync_Item(Item data)
         {
-            // Implement
+            var result = await App.Database.UpdateAsync(data);
+            if (result == 1)
+            {
+                return true;
+            }
 
             return false;
         }
 
         public async Task<bool> DeleteAsync_Item(Item data)
         {
-            // Implement
+            var result = await App.Database.DeleteAsync(data);
+            if (result == 1)
+            {
+                return true;
+            }
 
             return false;
         }
 
         public async Task<Item> GetAsync_Item(string id)
         {
-            // Implement
-            return null;
+            try
+            {
+                var result = await App.Database.GetAsync<Item>(id);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public async Task<IEnumerable<Item>> GetAllAsync_Item(bool forceRefresh = false)
         {
-            // Implement
-            return null;
+            var result = await App.Database.Table<Item>().ToListAsync();
+            return result;
         }
-        #endregion Item
+#endregion ItemNew
+
+        //#region Item
+        //// Item
+
+        //// Add InsertUpdateAsync_Item Method
+
+        //// Check to see if the item exists
+        //// Add your code here.
+
+        //// If it does not exist, then Insert it into the DB
+        //// Add your code here.
+        //// return true;
+
+        //// If it does exist, Update it into the DB
+        //// Add your code here
+        //// return true;
+
+        //// If you got to here then return false;
+
+        //public async Task<bool> InsertUpdateAsync_Item(Item data)
+        //{
+        //    // Implement
+
+        //    return false;
+        //}
+
+        //public async Task<bool> AddAsync_Item(Item data)
+        //{
+        //    // Implement
+
+        //    return false;
+        //}
+
+        //public async Task<bool> UpdateAsync_Item(Item data)
+        //{
+        //    // Implement
+
+        //    return false;
+        //}
+
+        //public async Task<bool> DeleteAsync_Item(Item data)
+        //{
+        //    // Implement
+
+        //    return false;
+        //}
+
+        //public async Task<Item> GetAsync_Item(string id)
+        //{
+        //    // Implement
+        //    return null;
+        //}
+
+        //public async Task<IEnumerable<Item>> GetAllAsync_Item(bool forceRefresh = false)
+        //{
+        //    // Implement
+        //    return null;
+        //}
+        //#endregion Item
 
         #region Character
         // Character

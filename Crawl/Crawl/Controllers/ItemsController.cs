@@ -43,7 +43,7 @@ namespace Crawl.Controllers
 
             // Needs to get items from the server
 
-            var URLComponent = "XYZ/";
+            var URLComponent = "GetItemList/";
 
             var DataResult = await HttpClientService.Instance.GetJsonGetAsync(WebGlobals.WebSiteAPIURL + URLComponent + parameter);
 
@@ -55,14 +55,20 @@ namespace Crawl.Controllers
                 return null;
             }
 
-            // Then update the database
-
-            // Use a foreach on myList
-
             // Implement
+            // Then update the database
+            // Use a foreach on myList
+ 
+
+            foreach (var item in myList)
+            {
+                // Call to the View Model (that is where the datasource is set, and have it then save
+                // await abcdefg;
+                await ItemsViewModel.Instance.InsertUpdateAsync(item);
+            }
 
             // When foreach is done, call to the items view model to set needs refresh to true, so it can refetch the list...
-            // Implement
+            ItemsViewModel.Instance.SetNeedsRefresh(true);
 
             return myList;
         }
@@ -169,8 +175,16 @@ namespace Crawl.Controllers
             {
                 myData.Guid = JsonHelper.GetJsonString(json, "Guid");
                 myData.Id = myData.Guid;    // Set to be the same as Guid, does not come down from server, but needed for DB
-
-                // Look in JsonHelper for more types...
+                
+                //adding conversion support for rest of the fields
+                myData.Name = JsonHelper.GetJsonString(json, "Name");
+                myData.Value = JsonHelper.GetJsonInteger(json, "Value");
+                myData.Attribute = (AttributeEnum)JsonHelper.GetJsonInteger(json, "Attribute");
+                myData.Location = (ItemLocationEnum)JsonHelper.GetJsonInteger(json, "Location");
+                myData.Description = JsonHelper.GetJsonString(json, "Description");
+                myData.ImageURI = JsonHelper.GetJsonString(json, "ImageURI");
+                myData.Range = JsonHelper.GetJsonInteger(json, "Range");
+                myData.Damage = JsonHelper.GetJsonInteger(json, "Damage");
 
             }
 
