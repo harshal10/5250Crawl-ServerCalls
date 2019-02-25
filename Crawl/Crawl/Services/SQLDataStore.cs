@@ -80,7 +80,6 @@ namespace Crawl.Services
             await AddAsync_Item(new Item("SQL Bunny Hat", "Pink hat with fluffy ears",
                 "http://www.clipartbest.com/cliparts/yik/e9k/yike9kMyT.png", 0, 10, -1, ItemLocationEnum.Head, AttributeEnum.Speed));
 
-            // Implement Characters
             await AddAsync_Character(new Character { Id = Guid.NewGuid().ToString(), Name = "SQL First Character", Description = "This is an Character description.", Level = 1 });
             await AddAsync_Character(new Character { Id = Guid.NewGuid().ToString(), Name = "SQL Second Character", Description = "This is an Character description.", Level = 1 });
             await AddAsync_Character(new Character { Id = Guid.NewGuid().ToString(), Name = "SQL Third Character", Description = "This is an Character description.", Level = 2 });
@@ -88,7 +87,7 @@ namespace Crawl.Services
             await AddAsync_Character(new Character { Id = Guid.NewGuid().ToString(), Name = "SQL Fifth Character", Description = "This is an Character description.", Level = 3 });
             await AddAsync_Character(new Character { Id = Guid.NewGuid().ToString(), Name = "SQL Sixth Character", Description = "This is an Character description.", Level = 3 });
 
-            // Implement Monsters
+
             await AddAsync_Monster(new Monster { Id = Guid.NewGuid().ToString(), Name = "SQL First Monster", Description = "This is an Monster description." });
             await AddAsync_Monster(new Monster { Id = Guid.NewGuid().ToString(), Name = "SQL Second Monster", Description = "This is an Monster description." });
             await AddAsync_Monster(new Monster { Id = Guid.NewGuid().ToString(), Name = "SQL Third Monster", Description = "This is an Monster description." });
@@ -96,12 +95,6 @@ namespace Crawl.Services
             await AddAsync_Monster(new Monster { Id = Guid.NewGuid().ToString(), Name = "SQL Fifth Monster", Description = "This is an Monster description." });
             await AddAsync_Monster(new Monster { Id = Guid.NewGuid().ToString(), Name = "SQL Sixth Monster", Description = "This is an Monster description." });
 
-            //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "First Score", ScoreTotal = 111 });
-            //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "Second Score", ScoreTotal = 222 });
-            //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "Third Score", ScoreTotal = 333 });
-            //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "Fourth Score", ScoreTotal = 444 });
-            //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "Fifth Score", ScoreTotal = 555 });
-            //await AddAsync_Score(new Score { Id = Guid.NewGuid().ToString(), NameBogus = "Sixth Score", ScoreTotal = 666 });
         }
         #region ItemNew
         public async Task<bool> InsertUpdateAsync_Item(Item data)
@@ -130,15 +123,10 @@ namespace Crawl.Services
             if (UpdateResult)
 
             {
-
                 await AddAsync_Item(data);
 
                 return true;
-
             }
-
-
-
             return false;
         }
 
@@ -179,11 +167,13 @@ namespace Crawl.Services
         {
             try
             {
-                var result = await App.Database.GetAsync<Item>(id);
+                var temp = await App.Database.GetAsync<Item>(id);
+                var result = new Item(temp);
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
+                Console.WriteLine(Ex.ToString());
                 return null;
             }
         }

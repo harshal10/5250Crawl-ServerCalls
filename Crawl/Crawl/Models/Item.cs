@@ -54,7 +54,6 @@ namespace Crawl.Models
             Location = ItemLocationEnum.Unknown;
             Attribute = AttributeEnum.Unknown;
 
-            ImageURI = null;
         }
 
         // Helper to combine the attributes into a single line, to make it easier to display the item as a string

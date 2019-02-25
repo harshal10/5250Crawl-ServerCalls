@@ -43,7 +43,7 @@ namespace Crawl
 	        {
 	            if (_database == null)
 	            {
-	                _database = new SQLiteAsyncConnection(DependencyService.Get<IFileHelper>().GetLocalFilePath("CrawlDatabaseKoenig1.db3"));
+	                _database = new SQLiteAsyncConnection(DependencyService.Get<IFileHelper>().GetLocalFilePath("CrawlDatabaseKoenig4.db3"));
 	            }
 	            return _database;
 	        }

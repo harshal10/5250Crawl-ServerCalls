@@ -178,13 +178,17 @@ namespace Crawl.Controllers
                 
                 //adding conversion support for rest of the fields
                 myData.Name = JsonHelper.GetJsonString(json, "Name");
+                myData.Description = JsonHelper.GetJsonString(json, "Description");
+                myData.ImageURI = JsonHelper.GetJsonString(json, "ImageURI");
+
+                myData.Range = JsonHelper.GetJsonInteger(json, "Range");
+
                 myData.Value = JsonHelper.GetJsonInteger(json, "Value");
                 myData.Attribute = (AttributeEnum)JsonHelper.GetJsonInteger(json, "Attribute");
                 myData.Location = (ItemLocationEnum)JsonHelper.GetJsonInteger(json, "Location");
-                myData.Description = JsonHelper.GetJsonString(json, "Description");
-                myData.ImageURI = JsonHelper.GetJsonString(json, "ImageURI");
-                myData.Range = JsonHelper.GetJsonInteger(json, "Range");
-                myData.Damage = JsonHelper.GetJsonInteger(json, "Damage");
+                
+                
+               
 
             }
 
