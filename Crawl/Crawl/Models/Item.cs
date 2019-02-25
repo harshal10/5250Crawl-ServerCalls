@@ -66,7 +66,6 @@ namespace Crawl.Models
                             "Location : " +Location.ToString() + "\n" +
                             "Attribute : " + Attribute.ToString() + "\n" +
                             "Value : " + Value + "\n" +
-                            "Damage : " + Damage + "\n" +
                             "Range : " + Range;
 
             return myReturn.Trim();
@@ -110,8 +109,8 @@ namespace Crawl.Models
             Value = newData.Value;
             Attribute = newData.Attribute;
             Location = newData.Location;
-            Name = newData.Name;
-            Description = newData.Description;
+
+
             ImageURI = newData.ImageURI;
             Range = newData.Range;
             Damage = newData.Damage;

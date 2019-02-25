@@ -116,6 +116,27 @@ namespace Crawl.Services
         {
 
 
+            var oldData = await GetAsync_Item(data.Id);
+
+            if (oldData == null)
+
+            {
+
+                await AddAsync_Item(data);
+
+                return true;
+
+            }
+            // Compare it, if different update in the DB
+            var UpdateResult = await UpdateAsync_Item(data);
+
+            if (UpdateResult)
+
+            {
+                await AddAsync_Item(data);
+
+                return true;
+            }
             return false;
         }
 

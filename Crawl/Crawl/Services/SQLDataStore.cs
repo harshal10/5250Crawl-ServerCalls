@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Crawl.Models;
+using System.Diagnostics;
 using Crawl.ViewModels;
 
 namespace Crawl.Services
@@ -96,7 +97,7 @@ namespace Crawl.Services
             await AddAsync_Monster(new Monster { Id = Guid.NewGuid().ToString(), Name = "SQL Sixth Monster", Description = "This is an Monster description." });
 
         }
-        #region ItemNew
+        #region Item
         public async Task<bool> InsertUpdateAsync_Item(Item data)
         {
 
@@ -114,25 +115,24 @@ namespace Crawl.Services
 
             }
 
-
-
             // Compare it, if different update in the DB
-
-            var UpdateResult = await UpdateAsync_Item(data);
-
-            if (UpdateResult)
-
+            if (oldData.Id != data.Id)
             {
                 await AddAsync_Item(data);
 
                 return true;
             }
+            //else update DP with new item
+            var UpdateResult = await UpdateAsync_Item(data);
+            Debug.WriteLine("UpdateResult val: " + UpdateResult);
+
             return false;
         }
 
         public async Task<bool> AddAsync_Item(Item data)
         {
             var result = await App.Database.InsertAsync(data);
+            Debug.WriteLine("Add to DB: " + result);
             if (result == 1)
             {
                 return true;
@@ -144,6 +144,7 @@ namespace Crawl.Services
         public async Task<bool> UpdateAsync_Item(Item data)
         {
             var result = await App.Database.UpdateAsync(data);
+            Debug.WriteLine("DB updated: " + result);
             if (result == 1)
             {
                 return true;
@@ -168,8 +169,8 @@ namespace Crawl.Services
             try
             {
                 var temp = await App.Database.GetAsync<Item>(id);
-                var result = new Item(temp);
-                return result;
+                //var result = new Item(temp);
+                return temp;
             }
             catch (Exception Ex)
             {
@@ -183,66 +184,8 @@ namespace Crawl.Services
             var result = await App.Database.Table<Item>().ToListAsync();
             return result;
         }
-#endregion ItemNew
+        #endregion Item
 
-        //#region Item
-        //// Item
-
-        //// Add InsertUpdateAsync_Item Method
-
-        //// Check to see if the item exists
-        //// Add your code here.
-
-        //// If it does not exist, then Insert it into the DB
-        //// Add your code here.
-        //// return true;
-
-        //// If it does exist, Update it into the DB
-        //// Add your code here
-        //// return true;
-
-        //// If you got to here then return false;
-
-        //public async Task<bool> InsertUpdateAsync_Item(Item data)
-        //{
-        //    // Implement
-
-        //    return false;
-        //}
-
-        //public async Task<bool> AddAsync_Item(Item data)
-        //{
-        //    // Implement
-
-        //    return false;
-        //}
-
-        //public async Task<bool> UpdateAsync_Item(Item data)
-        //{
-        //    // Implement
-
-        //    return false;
-        //}
-
-        //public async Task<bool> DeleteAsync_Item(Item data)
-        //{
-        //    // Implement
-
-        //    return false;
-        //}
-
-        //public async Task<Item> GetAsync_Item(string id)
-        //{
-        //    // Implement
-        //    return null;
-        //}
-
-        //public async Task<IEnumerable<Item>> GetAllAsync_Item(bool forceRefresh = false)
-        //{
-        //    // Implement
-        //    return null;
-        //}
-        //#endregion Item
 
         #region Character
         // Character
