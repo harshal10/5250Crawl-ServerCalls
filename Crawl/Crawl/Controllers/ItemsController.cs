@@ -55,10 +55,8 @@ namespace Crawl.Controllers
                 return null;
             }
 
-            // Implement
-            // Then update the database
-            // Use a foreach on myList
  
+            //updating the DB 
 
             foreach (var item in myList)
             {
@@ -79,7 +77,7 @@ namespace Crawl.Controllers
         // Random is to have the value random between 1 and the Level
         // Attribute is a filter to return only items for that attribute, else unknown is used for any
         // Location is a filter to return only items for that location, else unknown is used for any
-        public async Task<List<Item>> GetItemsFromGame(int number, int level, AttributeEnum attribute, ItemLocationEnum location, bool random, bool updateDataBase)
+        public async Task<List<Item>> GetItemsFromGame(int number, int value, AttributeEnum attribute, ItemLocationEnum location, bool random, bool updateDataBase)
         {
             // Needs to get items from the server
             // Parse them
@@ -97,7 +95,10 @@ namespace Crawl.Controllers
             {
                 { "Number", number.ToString()},
                 { "Attribute", ((int)attribute).ToString()},
-                // Implement missing paramaters...
+                { "Location", ((int)location).ToString()},
+                { "Random" , random.ToString()},
+                { "updateDataBase", updateDataBase.ToString() },
+                { "Level", value.ToString() }
 
             };
 
@@ -122,12 +123,11 @@ namespace Crawl.Controllers
                 foreach (var item in myList)
                 {
                     // Call to the View Model (that is where the datasource is set, and have it then save
-                    // await abcdefg;
-                    // Implement
+                    await ItemsViewModel.Instance.InsertUpdateAsync(item);
                 }
 
-                // When foreach is done, call to the items view model to set needs refresh to true, so it can refetch the list...
-                // Implement
+                // When foreach is done, call to the items view model to set needs refresh to true
+                ItemsViewModel.Instance.SetNeedsRefresh(true);
             }
 
             return myList;
